@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "account_name": "Brainverse",
+    "amount": 1077.15
+  },
+  {
+    "id": 2,
+    "account_name": "Muxo",
+    "amount": 4542.87
+  },
+  {
+    "id": 3,
+    "account_name": "Midel",
+    "amount": 3443.94
+  },
+  {
+    "id": 4,
+    "account_name": "Zooveo",
+    "amount": 4616.7
+  },
+  {
+    "id": 5,
+    "account_name": "Tanoodle",
+    "amount": 756.32
+  }
+]
