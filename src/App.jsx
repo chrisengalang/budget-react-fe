@@ -1,5 +1,5 @@
 import './App.css'
-import Accounts from './components/accounts/Accounts'
+import Accounts from './pages/Accounts'
 
 const App = () => {
   return (

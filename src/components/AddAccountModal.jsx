@@ -29,7 +29,6 @@ const AddAccountModal = ({showModal, handleShowModal, setAccountList, accountLis
           <Button onClick={handleAddAccount}>Add</Button>
           <Button onClick={handleShowModal}>Cancel</Button>
         </Stack>
-        
       </ModalBody>
     </Modal>
   )
