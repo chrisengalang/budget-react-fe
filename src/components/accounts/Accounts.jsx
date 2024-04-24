@@ -1,7 +1,18 @@
-import { Card, CardBody, CardHeader, CardText, CardTitle, Col, Container, Row, Stack } from 'react-bootstrap'
+import { Button, Card, CardBody, CardHeader, CardText, CardTitle, Col, Container, Row, Stack } from 'react-bootstrap'
 import accounts from '../../assets/mock/accounts.json'
+import { useEffect, useState } from 'react'
+import AddAccountModal from './AddAccountModal'
 
 const Accounts = () => {
+
+  const [accountList, setAccountList] = useState([])
+  const [showModal, setShowModal] = useState(false)
+
+  const handleShowModal = () => setShowModal(!showModal)
+
+  useEffect(() => {
+    setAccountList(accounts)
+  }, [])
 
   return (
     <Container>
@@ -9,7 +20,7 @@ const Accounts = () => {
       <Container>
           <Row xs={1} sm={2} md={3}>
             {
-              accounts.map((account) => {
+              accountList.map((account) => {
                 return (
                   <Col key={account.id} className='mb-4'>
                     <Card>
@@ -28,6 +39,10 @@ const Accounts = () => {
             }
           </Row>
       </Container>
+      <Container>
+        <Button className='mb-4 w-100' size='lg' onClick={handleShowModal}>Add Account</Button>
+      </Container>
+      <AddAccountModal handleShowModal={handleShowModal} showModal={showModal} setAccountList={setAccountList} accountList={accountList}/>
     </Container>
   )
 }
