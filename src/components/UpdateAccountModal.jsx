@@ -18,7 +18,7 @@ const UpdateAccountModal = ({showModal, handleShowModal, account}) => {
   return (
     <Modal show={showModal} onHide={handleShowModal}>
       <ModalHeader closeButton>
-        <ModalTitle>Add Account</ModalTitle>
+        <ModalTitle>Update Account</ModalTitle>
       </ModalHeader>
       <ModalBody>
         <FormControl className="mb-4" type="text" placeholder="Account Name" value={tempAccountName} onChange={(e) => setAccountName(e.target.value)} />

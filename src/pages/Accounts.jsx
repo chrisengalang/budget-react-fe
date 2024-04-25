@@ -17,7 +17,7 @@ const Accounts = () => {
 
   return (
     <Container>
-      <h1 className='text-center my-4'>Account Management</h1>
+      <h2 className='text-center mb-4'>Accounts</h2>
       <Container>
           <Row xs={1} sm={2} md={3}>
             {
