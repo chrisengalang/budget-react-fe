@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import AddAccountModal from '../components/AddAccountModal'
 import Account from '../components/Account'
 
-const Accounts = () => {
+const AccountsPage = () => {
 
   const [accountList, setAccountList] = useState([])
   const [showAddAccountModal, setShowAddAccountModal] = useState(false)
@@ -39,4 +39,4 @@ const Accounts = () => {
   )
 }
 
-export default Accounts
+export default AccountsPage

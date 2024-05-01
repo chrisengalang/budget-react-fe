@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Accounts from './pages/Accounts.jsx'
-import Transactions from './pages/Transactions.jsx'
+import AccountsPage from './pages/AccountsPage.jsx'
+import TransactionsPage from './pages/TransactionsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -13,11 +13,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Accounts />
+        element: <AccountsPage />
+      },
+      {
+        path: '/accounts/:id',
+        element: <AccountsPage />
       },
       {
         path: '/transactions',
-        element: <Transactions />
+        element: <TransactionsPage />
       }
     ]
   }

@@ -1,18 +1,11 @@
 import { useState } from "react"
 import { Card, CardBody, CardText, CardTitle } from "react-bootstrap"
-import UpdateAccountModal from "./UpdateAccountModal"
-
 
 const Account = ({account}) => {
-
-  const [accountInfo, setAccountInfo] = useState(account)
-  const [showUpdateModal, setShowUpdateModal] = useState(false)
-
-  const handleShowUpdateModal = () => setShowUpdateModal(!showUpdateModal)
-
+  const [accountInfo] = useState(account)
   return (
     <Card>
-      <CardBody onClick={handleShowUpdateModal}>
+      <CardBody>
         <CardTitle>
           {accountInfo.account_name}
         </CardTitle>
@@ -20,7 +13,6 @@ const Account = ({account}) => {
           {accountInfo.amount}
         </CardText>
       </CardBody>
-      <UpdateAccountModal account={accountInfo} showModal={showUpdateModal} handleShowModal={setShowUpdateModal} />
     </Card>
   )
 }

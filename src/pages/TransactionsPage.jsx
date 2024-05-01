@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap"
 
-const Transactions = () => {
+const TransactionsPage = () => {
 
   return (
     <Container>
@@ -9,4 +9,4 @@ const Transactions = () => {
   )
 }
 
-export default Transactions
+export default TransactionsPage
