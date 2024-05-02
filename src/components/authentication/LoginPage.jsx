@@ -1,15 +1,38 @@
-import { useState } from "react"
+import { getDoc, setDoc } from "firebase/firestore"
+import { useEffect, useState } from "react"
 import { Button, Container, Form } from "react-bootstrap"
-
+import { useAuth } from "../../context/authentication/AuthProvider"
+import { doSignInWithEmailAndPassword } from "../../firebase/authentication"
+import { auth } from "../../firebase/firebase"
+import { useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isSigningIn, setIsSigningIn] = useState(false)
+  const { currentUser, setCurrentUser } = useAuth()
+  const navigate = useNavigate()
 
-  const onSubmit = (e) => {
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/home')
+    }
+  }, [])
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    alert(`${email}, ${password}`)
+    if (!isSigningIn) {
+      setIsSigningIn(true)
+      await doSignInWithEmailAndPassword(email, password).then(() => {
+        setIsSigningIn(false)
+        setCurrentUser(auth.currentUser)
+        console.log(currentUser)
+      }).catch((error) => {
+        console.log(error)
+        setIsSigningIn(false)
+      })
+    }
   }
 
   return (

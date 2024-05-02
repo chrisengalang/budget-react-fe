@@ -1,31 +1,42 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { doCreateUserWithEmailAndPassword } from "../../firebase/authentication";
+import { doCreateUserWithEmailAndPassword, doSignOut } from "../../firebase/authentication";
 import { auth, db } from "../../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
 
+  const navigate = useNavigate()
+
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [isRegistering, setIsRegistering] = useState(false)
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match')
-    } else {
+    if (!isRegistering && password === confirmPassword) {
+      setIsRegistering(true)
       await doCreateUserWithEmailAndPassword(email, password).then(() => {
         const currentUser = auth.currentUser
         setErrorMessage('')
         setDoc(doc(db, "users", currentUser.uid), {
-          email: email,
-          uid: currentUser.uid
+          uid: currentUser.uid,
+          name: name,
+          email: email
+        }).then(() => {
+          setIsRegistering(false)
+          doSignOut()
+          navigate('/')
         })
       }).catch((error) => {
         setErrorMessage(error.message)
       })
+    } else {
+      setErrorMessage('Passwords do not match')
     }
   }
 
@@ -34,6 +45,10 @@ const RegisterPage = () => {
       <h2 className="text-center mb-4">Register</h2>
       <Container>
         <Form>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="text" placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
@@ -50,8 +65,8 @@ const RegisterPage = () => {
             <Form.Text>Already have an account? <a href="/">Login</a></Form.Text>
           </Form.Group>
           {errorMessage && <p className="text-danger">{errorMessage}</p>}
-          <Button variant="primary" type="submit" onClick={onSubmit}>
-            Register
+          <Button variant="primary" type="submit" onClick={onSubmit} disabled={isRegistering}>
+            { isRegistering ? 'Registering...' : 'Register' }
           </Button>
         </Form>
       </Container>
