@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
+import { doCreateUserWithEmailAndPassword } from "../../firebase/authentication";
+import { auth, db } from "../../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterPage = () => {
 
@@ -8,12 +11,21 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match')
     } else {
-      console.log(email, password)
+      await doCreateUserWithEmailAndPassword(email, password).then(() => {
+        const currentUser = auth.currentUser
+        setErrorMessage('')
+        setDoc(doc(db, "users", currentUser.uid), {
+          email: email,
+          uid: currentUser.uid
+        })
+      }).catch((error) => {
+        setErrorMessage(error.message)
+      })
     }
   }
 
