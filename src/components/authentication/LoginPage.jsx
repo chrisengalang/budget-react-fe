@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Col, Container, Form, Row } from "react-bootstrap"
+import { Button, Container, Form } from "react-bootstrap"
 
 
 const LoginPage = () => {
@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(email, password)
+    alert(`${email}, ${password}`)
   }
 
   return (
@@ -29,7 +29,7 @@ const LoginPage = () => {
             <Form.Text>No account yet? <a href="/registration">Register</a></Form.Text>
           </Form.Group>
           <Button variant="primary" type="submit" onClick={onSubmit}>
-            Submit
+            Sign in
           </Button>
         </Form>
       </Container>

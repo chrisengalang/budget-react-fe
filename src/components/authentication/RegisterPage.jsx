@@ -39,7 +39,7 @@ const RegisterPage = () => {
           </Form.Group>
           {errorMessage && <p className="text-danger">{errorMessage}</p>}
           <Button variant="primary" type="submit" onClick={onSubmit}>
-            Submit
+            Register
           </Button>
         </Form>
       </Container>
