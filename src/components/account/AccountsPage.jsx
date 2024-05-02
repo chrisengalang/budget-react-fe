@@ -1,8 +1,8 @@
-import { Button, Card, CardBody, CardText, CardTitle, Col, Container, Row } from 'react-bootstrap'
-import accounts from '../assets/mock/accounts.json'
+import { Button, Col, Container, Row } from 'react-bootstrap'
+import accounts from '../../assets/mock/accounts.json'
 import { useEffect, useState } from 'react'
-import AddAccountModal from '../components/AddAccountModal'
-import Account from '../components/Account'
+import AddAccountModal from './AddAccountModal'
+import Account from './Account'
 
 const AccountsPage = () => {
 
