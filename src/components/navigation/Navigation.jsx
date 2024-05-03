@@ -1,22 +1,23 @@
 import { Button, Container, Nav, NavItem, NavLink, Navbar, NavbarBrand } from "react-bootstrap"
 import { useAuth } from "../../context/authentication/AuthProvider"
-import { doSignOut } from "../../firebase/authentication"
-import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { doSignOut } from "../../service/authentication/authentication"
+import { useEffect } from "react"
 
 const Navigation = () => {
 
-  const { currentUser } = useAuth()
+  const { currentUser, setCurrentUser } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!currentUser) {
       navigate('/')
     }
-  }, []) 
+  }, [])
 
   const handleSignOut = async () => {
     await doSignOut().then(() => {
+      setCurrentUser(null)
       navigate('/')
     })
   }

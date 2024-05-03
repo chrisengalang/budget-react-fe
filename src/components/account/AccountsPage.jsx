@@ -3,21 +3,28 @@ import accounts from '../../assets/mock/accounts.json'
 import { useEffect, useState } from 'react'
 import AddAccountModal from './AddAccountModal'
 import Account from './Account'
+import { useAuth } from '../../context/authentication/AuthProvider'
+import { useNavigate } from 'react-router-dom'
 
 const AccountsPage = () => {
 
   const [accountList, setAccountList] = useState([])
   const [showAddAccountModal, setShowAddAccountModal] = useState(false)
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddAccountModal = () => setShowAddAccountModal(!showAddAccountModal)
 
   useEffect(() => {
+    if (!currentUser) {
+      navigate('/')
+    }
     setAccountList(accounts)
   }, [])
 
   return (
     <Container>
-      <h2 className='text-center mb-4'>Accounts</h2>
+      <h2 className='text-center mb-4'>Hi {currentUser.name}</h2>
       <Container>
           <Row xs={1} sm={2} md={3}>
             {

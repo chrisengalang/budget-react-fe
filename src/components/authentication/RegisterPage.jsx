@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { doCreateUserWithEmailAndPassword, doSignOut } from "../../firebase/authentication";
 import { auth, db } from "../../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { doCreateUserWithEmailAndPassword, doSignOut } from "../../service/authentication/authentication";
+import { addUser } from "../../service/database/user";
 
 const RegisterPage = () => {
 
@@ -20,20 +21,16 @@ const RegisterPage = () => {
     e.preventDefault()
     if (!isRegistering && password === confirmPassword) {
       setIsRegistering(true)
-      await doCreateUserWithEmailAndPassword(email, password).then(() => {
-        const currentUser = auth.currentUser
-        setErrorMessage('')
-        setDoc(doc(db, "users", currentUser.uid), {
-          uid: currentUser.uid,
-          name: name,
-          email: email
-        }).then(() => {
-          setIsRegistering(false)
-          doSignOut()
-          navigate('/')
-        })
-      }).catch((error) => {
+      const creation = await doCreateUserWithEmailAndPassword(email, password).then(async () => {
+        return auth.currentUser
+      })
+      .catch((error) => {
         setErrorMessage(error.message)
+      })
+      await addUser(creation, name)
+      doSignOut().then(() => {
+        setIsRegistering(false)
+        navigate('/')
       })
     } else {
       setErrorMessage('Passwords do not match')

@@ -1,12 +1,12 @@
-import { getDoc, setDoc } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { Button, Container, Form } from "react-bootstrap"
 import { useAuth } from "../../context/authentication/AuthProvider"
-import { doSignInWithEmailAndPassword } from "../../firebase/authentication"
 import { auth } from "../../firebase/firebase"
 import { useNavigate } from "react-router-dom"
+import { doSignInWithEmailAndPassword } from "../../service/authentication/authentication"
+import { getUser } from "../../service/database/user"
 
-const LoginPage = () => {
+const LoginPage = ({LoginService}) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -14,24 +14,25 @@ const LoginPage = () => {
   const { currentUser, setCurrentUser } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/home')
-    }
-  }, [])
-
   const onSubmit = async (e) => {
     e.preventDefault()
     if (!isSigningIn) {
       setIsSigningIn(true)
-      await doSignInWithEmailAndPassword(email, password).then(() => {
+      const user = await doSignInWithEmailAndPassword(email, password).then(() => {
         setIsSigningIn(false)
-        setCurrentUser(auth.currentUser)
-        console.log(currentUser)
+        return auth.currentUser
       }).catch((error) => {
         console.log(error)
         setIsSigningIn(false)
       })
+      await getUser(user.uid).then((data) => {
+        setCurrentUser({
+          auth: user,
+          name: data.data().name,
+        })
+      })
+
+      navigate('/home')
     }
   }
 
@@ -51,8 +52,8 @@ const LoginPage = () => {
           <Form.Group className="mb-3">
             <Form.Text>No account yet? <a href="/registration">Register</a></Form.Text>
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={onSubmit}>
-            Sign in
+          <Button variant="primary" type="submit" onClick={onSubmit} disabled={isSigningIn}>
+            { isSigningIn ? 'Signing In...' : 'Sign In' }
           </Button>
         </Form>
       </Container>
