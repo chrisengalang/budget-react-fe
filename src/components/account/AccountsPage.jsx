@@ -40,7 +40,7 @@ const AccountsPage = () => {
             {
               accountList && accountList.map((account) => {
                 return (
-                  <Col key={account.key} className='mb-4'>
+                  <Col key={account.userId} className='mb-4'>
                     <Account account={account} />
                   </Col>
                 )

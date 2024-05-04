@@ -1,8 +1,8 @@
-import {doc, getDoc, getDocs, setDoc, collection, query, where } from "firebase/firestore";
+import {doc, addDoc, getDocs, collection, query, where } from "firebase/firestore";
 import {db} from "../../firebase/firebase.js";
 
 export const createAccount = async (account, uid) => {
-  return setDoc(doc(db, "accounts"), {
+  return addDoc(collection(db, "accounts"), {
     userId: uid,
     ...account
   })
