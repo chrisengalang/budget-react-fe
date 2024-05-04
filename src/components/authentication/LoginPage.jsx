@@ -11,13 +11,14 @@ const LoginPage = ({LoginService}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSigningIn, setIsSigningIn] = useState(false)
-  const { currentUser, setCurrentUser } = useAuth()
+  const { setUserLoading, setCurrentUser } = useAuth()
   const navigate = useNavigate()
 
   const onSubmit = async (e) => {
     e.preventDefault()
     if (!isSigningIn) {
       setIsSigningIn(true)
+      setUserLoading(true)
       const user = await doSignInWithEmailAndPassword(email, password).then(() => {
         setIsSigningIn(false)
         return auth.currentUser

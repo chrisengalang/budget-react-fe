@@ -9,7 +9,7 @@ const Account = ({account}) => {
     <Card>
       <CardBody>
         <CardTitle>
-          {accountInfo.account_name}
+          {accountInfo.accountName}
         </CardTitle>
         <CardText>
           {accountInfo.amount}

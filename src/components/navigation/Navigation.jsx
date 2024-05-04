@@ -6,7 +6,7 @@ import { useEffect } from "react"
 
 const Navigation = () => {
 
-  const { currentUser, setCurrentUser } = useAuth()
+  const { currentUser, setCurrentUser, userLoading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Navigation = () => {
       <Container>
         <NavbarBrand>Budget App</NavbarBrand>
         { 
-          currentUser && 
+          currentUser && !userLoading &&
           <Nav className="me-auto">
             <NavItem>
               <NavLink href='/'>Accounts</NavLink>
@@ -35,7 +35,7 @@ const Navigation = () => {
             <NavItem>
               <NavLink href='/transactions'>Transactions</NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem className='justify-content-end'>
               <Button onClick={handleSignOut}>
                 Sign Out
               </Button>

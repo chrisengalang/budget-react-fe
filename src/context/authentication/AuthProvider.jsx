@@ -11,6 +11,7 @@ export const useAuth = () => {
 const AuthProvider = ({children}) => {
   const [currentUser, setCurrentUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userLoading, setUserLoading] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -23,7 +24,9 @@ const AuthProvider = ({children}) => {
 
   const value = {
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    userLoading,
+    setUserLoading
   }
 
   return (
