@@ -10,12 +10,12 @@ const AccountsPage = () => {
 
   const [accountList, setAccountList] = useState([])
   const [showAddAccountModal, setShowAddAccountModal] = useState(false)
-  const { currentUser, setUserLoading } = useAuth();
+  const { currentUser, setCurrentUser, setUserLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleAddAccountModal = () => setShowAddAccountModal(!showAddAccountModal)
-  const getAccounts = async (userId) => {
-    const accountsCollection = await getAccountsByUserId(userId)
+  const getAccounts = async (uid) => {
+    const accountsCollection = await getAccountsByUserId(uid)
     const accountsList = []
     accountsCollection.forEach((doc) => {
       accountsList.push({key: doc.id, ...doc.data()})
@@ -24,11 +24,14 @@ const AccountsPage = () => {
   }
 
   useEffect(() => {
-    if (!currentUser) {
+    const sessionUser = JSON.parse(sessionStorage.getItem('currentUser'))
+
+    if (!sessionUser) {
       navigate('/')
+    } else {
+      setCurrentUser(sessionUser)
     }
-    console.log(currentUser)
-    getAccounts(currentUser.auth.uid)
+    getAccounts(sessionUser.auth.uid)
     setUserLoading(false)
   }, [])
 
@@ -40,7 +43,7 @@ const AccountsPage = () => {
             {
               accountList && accountList.map((account) => {
                 return (
-                  <Col key={account.userId} className='mb-4'>
+                  <Col key={account.id} className='mb-4'>
                     <Account account={account} />
                   </Col>
                 )
@@ -51,7 +54,7 @@ const AccountsPage = () => {
       <Container>
         <Button className='mb-4 w-100' size='lg' onClick={handleAddAccountModal}>Add Account</Button>
       </Container>
-      <AddAccountModal handleShowModal={handleAddAccountModal} showModal={showAddAccountModal} setAccountList={setAccountList} accountList={accountList}/>
+      <AddAccountModal handleShowModal={handleAddAccountModal} showModal={showAddAccountModal} accountList={accountList} setAccountList={setAccountList}/>
     </Container>
   )
 }

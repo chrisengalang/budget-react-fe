@@ -10,14 +10,20 @@ const Navigation = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!currentUser) {
+    const sessionUser = sessionStorage.getItem('currentUser')
+
+    if (!sessionUser) {
       navigate('/')
+    } else {
+      setCurrentUser(JSON.parse(sessionUser))
     }
+
   }, [])
 
   const handleSignOut = async () => {
     await doSignOut().then(() => {
       setCurrentUser(null)
+      sessionStorage.removeItem('currentUser')
       navigate('/')
     })
   }

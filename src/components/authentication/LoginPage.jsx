@@ -11,7 +11,7 @@ const LoginPage = ({LoginService}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSigningIn, setIsSigningIn] = useState(false)
-  const { setUserLoading, setCurrentUser } = useAuth()
+  const { setUserLoading, setCurrentUser, currentUser } = useAuth()
   const navigate = useNavigate()
 
   const onSubmit = async (e) => {
@@ -27,10 +27,13 @@ const LoginPage = ({LoginService}) => {
         setIsSigningIn(false)
       })
       await getUser(user.uid).then((data) => {
-        setCurrentUser({
+        const userObj = {
           auth: user,
-          name: data.data().name,
-        })
+          name: data.data().name
+        }
+        setCurrentUser(userObj)
+
+        sessionStorage.setItem('currentUser', JSON.stringify(userObj))
       })
 
       navigate('/home')

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useAuth } from "../../context/authentication/AuthProvider"
 import { createAccount } from "../../service/database/accounts"
 
-const AddAccountModal = ({showModal, handleShowModal, setAccountList, accountList}) => {
+const AddAccountModal = ({showModal, handleShowModal, accountList, setAccountList}) => {
 
   const [accountName, setAccountName] = useState('')
   const [amount, setAmount] = useState(0)
@@ -11,7 +11,7 @@ const AddAccountModal = ({showModal, handleShowModal, setAccountList, accountLis
 
   const handleAddAccount = () => {
     createAccount({accountName: accountName, amount: amount}, currentUser.auth.uid).then((account) => {
-      console.log(account)
+      setAccountList([...accountList, account])
       setAccountName('')
       setAmount(0)
       handleShowModal()
