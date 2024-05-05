@@ -5,7 +5,6 @@ import {Outlet} from "react-router-dom";
 const Home = () => {
   return (
       <Container>
-        hello
         <Navigation />
         <Outlet />
       </Container>

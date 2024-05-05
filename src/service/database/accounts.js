@@ -9,6 +9,7 @@ export const createAccount = async (account, uid) => {
 }
 
 export const getAccountsByUserId = async (userId) => {
+  console.log('userId getAccountsByUserId', userId)
   const accountsCollection = collection(db, 'accounts')
   return getDocs(query(accountsCollection, where('userId', '==', userId)))
 }

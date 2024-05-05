@@ -5,6 +5,7 @@ import { auth } from "../../firebase/firebase"
 import { useNavigate } from "react-router-dom"
 import { doSignInWithEmailAndPassword } from "../../service/authentication/authentication"
 import { getUser } from "../../service/database/user"
+import { saveUserSession } from "../../service/session/session"
 
 const LoginPage = ({LoginService}) => {
 
@@ -32,8 +33,7 @@ const LoginPage = ({LoginService}) => {
           name: data.data().name
         }
         setCurrentUser(userObj)
-
-        sessionStorage.setItem('currentUser', JSON.stringify(userObj))
+        saveUserSession(userObj)
       })
 
       navigate('/home')
