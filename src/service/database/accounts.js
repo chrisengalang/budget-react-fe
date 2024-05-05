@@ -1,4 +1,4 @@
-import {doc, addDoc, getDocs, collection, query, where } from "firebase/firestore";
+import { addDoc, getDocs, collection, query, where, getDoc, doc } from "firebase/firestore";
 import {db} from "../../firebase/firebase.js";
 
 export const createAccount = async (account, uid) => {
@@ -8,8 +8,11 @@ export const createAccount = async (account, uid) => {
   })
 }
 
+export const getAccountById = async (id) => {
+  return getDoc(doc(db, "accounts", id))
+}
+
 export const getAccountsByUserId = async (userId) => {
-  console.log('userId getAccountsByUserId', userId)
   const accountsCollection = collection(db, 'accounts')
   return getDocs(query(accountsCollection, where('userId', '==', userId)))
 }

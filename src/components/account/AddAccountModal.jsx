@@ -1,7 +1,7 @@
 import { Button, FormControl, Modal, ModalBody, ModalHeader, ModalTitle, Stack } from "react-bootstrap"
 import { useState } from "react"
 import { useAuth } from "../../context/authentication/AuthProvider"
-import { createAccount } from "../../service/database/accounts"
+import { createAccount, getAccountById } from "../../service/database/accounts"
 
 const AddAccountModal = ({showModal, handleShowModal, accountList, setAccountList}) => {
 
@@ -9,9 +9,10 @@ const AddAccountModal = ({showModal, handleShowModal, accountList, setAccountLis
   const [amount, setAmount] = useState(0)
   const { currentUser } = useAuth()
 
-  const handleAddAccount = () => {
-    createAccount({accountName: accountName, amount: amount}, currentUser.auth.uid).then((account) => {
-      setAccountList([...accountList, account])
+  const handleAddAccount = async () => {
+    const accountRef = await createAccount({accountName: accountName, amount: amount}, currentUser.auth.uid)
+    getAccountById(accountRef.id).then((account) => {
+      setAccountList([...accountList, account.data()])
       setAccountName('')
       setAmount(0)
       handleShowModal()
