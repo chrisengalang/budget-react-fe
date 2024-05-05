@@ -7,9 +7,8 @@ const getUser = async (id: string) : Promise<User> => {
   return userDoc.data() as User
 }
 
-const addUser = async (id: string, name: string, email: string) : Promise<User> => {
-  const createdUser =  await setDoc(doc(db, 'users', id), {id, name, email})
-  return createdUser as User
+const addUser = async (id: string, name: string, email: string) : Promise<void> => {
+  await setDoc(doc(db, 'users', id), {id, name, email})
 }
 
 export { getUser, addUser }
