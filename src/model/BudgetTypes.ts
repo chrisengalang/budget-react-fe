@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface User {
   id: string;
   name: string;
@@ -29,4 +31,15 @@ export interface RegistrationRequest {
 export interface RegistrationResponse {
   isSuccess: boolean;
   errorMessage: string;
+}
+
+export interface AuthContextType {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface AuthProviderProps {
+  children: React.ReactNode;
 }

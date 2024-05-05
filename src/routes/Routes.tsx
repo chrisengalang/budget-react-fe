@@ -1,6 +1,7 @@
 import App from "../App";
 import Login from "../component/authentication/Login";
 import Registration from "../component/authentication/Registration";
+import Dashboard from "../component/dashboard/Dashboard.tsx";
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
         path: "/registration",
         name: "Registration",
         element: <Registration />
+      },
+      {
+        path: "/dashboard",
+        name: "Dashboard",
+        element: <Dashboard />
       }
     ]
   }
