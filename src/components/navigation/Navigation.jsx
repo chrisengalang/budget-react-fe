@@ -2,23 +2,11 @@ import { Button, Container, Nav, NavItem, NavLink, Navbar, NavbarBrand } from "r
 import { useAuth } from "../../context/authentication/AuthProvider"
 import { useNavigate } from "react-router-dom"
 import { doSignOut } from "../../service/authentication/authentication"
-import { useEffect } from "react"
 
 const Navigation = () => {
 
   const { currentUser, setCurrentUser, userLoading } = useAuth()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const sessionUser = sessionStorage.getItem('currentUser')
-
-    if (!sessionUser) {
-      navigate('/')
-    } else {
-      setCurrentUser(JSON.parse(sessionUser))
-    }
-
-  }, [])
 
   const handleSignOut = async () => {
     await doSignOut().then(() => {

@@ -27,7 +27,9 @@ const LoginPage = ({LoginService}) => {
         console.log(error)
         setIsSigningIn(false)
       })
+      console.log(user)
       await getUser(user.uid).then((data) => {
+        console.log(data)
         const userObj = {
           auth: user,
           name: data.data().name
