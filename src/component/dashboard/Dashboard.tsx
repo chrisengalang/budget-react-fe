@@ -34,7 +34,6 @@ const Dashboard = () => {
         <Row xs={1} sm={2} md={3}>
           {
             accounts.map((account: Account) => {
-              console.log(account.id)
               return <Col key={account.id} className='mb-4'>
                 <AccountCard key={account.id} account={account}/>
               </Col>
