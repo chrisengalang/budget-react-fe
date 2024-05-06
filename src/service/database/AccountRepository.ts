@@ -23,7 +23,12 @@ const createAccount = async (account : AccountCreateRequest) => {
 
 const getAccountById = async (id : string) => {
   return getDoc(doc(db, "accounts", id))
-      .then((doc) => doc.data() as Account);
+      .then((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data()
+        } as Account
+      });
 }
 
 export { getAccountsByUserId,createAccount, getAccountById }

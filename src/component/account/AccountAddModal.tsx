@@ -22,7 +22,7 @@ const AccountAddModal = ({showAccountAddModal, setShowAccountAddModal, accounts,
     const userId : string | undefined = user?.id
     const accountRef = await createAccount({name, balance, userId})
     const account : Account = await getAccountById(accountRef.id)
-    setAccounts([...accounts, account])
+    setAccounts([account, ...accounts])
     setName('')
     setBalance(0)
     setShowAccountAddModal(false)
