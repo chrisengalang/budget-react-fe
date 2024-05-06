@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button, Container, Form } from "react-bootstrap"
-import { LoginRequest } from "../../model/BudgetTypes"
+import {LoginRequest, User} from "../../model/BudgetTypes"
 import { login } from "../../service/authentication/AuthenticationService"
 import {Link, useNavigate} from "react-router-dom";
 import {saveUserSession} from "../../service/session/SessionService.ts";
@@ -21,7 +21,7 @@ const Login = () => {
       email,
       password
     }
-    const loginResponse = await login(loginRequest)
+    const loginResponse:User = await login(loginRequest)
     await saveUserSession(loginResponse);
     setUser(loginResponse)
     setIsSigningIn(false)

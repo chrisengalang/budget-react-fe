@@ -10,6 +10,13 @@ export interface Account {
   id: string;
   name: string;
   balance: number;
+  userId: string;
+}
+
+export interface AccountCreateRequest {
+  name: string;
+  balance: number;
+  userId?: string;
 }
 
 export interface LoginRequest {
