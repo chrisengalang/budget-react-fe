@@ -1,30 +1,16 @@
-import App from "../App";
-import Login from "../component/authentication/Login";
-import Registration from "../component/authentication/Registration";
-import Dashboard from "../component/dashboard/Dashboard.tsx";
+import Login from "../components/auth/Login";
+import Registration from "../components/auth/Registration";
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        name: "Login",
-        element: <Login />
-      },
-      {
-        path: "/registration",
-        name: "Registration",
-        element: <Registration />
-      },
-      {
-        path: "/dashboard",
-        name: "Dashboard",
-        element: <Dashboard />
-      }
-    ]
+    path: '/',
+    name: 'Home',
+    element: <Login />
+  },
+  {
+    path: '/registration',
+    name: 'Registration',
+    element: <Registration />
   }
 ]
 

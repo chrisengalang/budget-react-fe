@@ -1,0 +1,17 @@
+* {
+  font-family: 'Inter', sans-serif;
+  background: rgb(240, 240, 240);
+}
+
+.button-budget-primary {
+  background: #00A3FF;
+  border: none;
+  height: 40px;
+}
+
+.text-budget-primary {
+  height: 40px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 0;
+}
